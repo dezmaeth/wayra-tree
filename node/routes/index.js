@@ -3,13 +3,10 @@
  */
 var twitter = require('ntwitter');
 var io = require('socket.io').listen(3001, {log: false});
-var serialport = require("serialport");
-var SerialPort = serialport.SerialPort
 var sending = false;
-var serialPort = new SerialPort("/dev/ttyACM0", {
-  baudrate: 57600
-},true);
-
+var util  = require('util'),
+    spawn = require('child_process').spawn,
+    cmd   = spawn('python', ['tree.py']);
 var tracking = [
                 '@firstjoblatam',
                 '#primertrabajo',
@@ -48,9 +45,9 @@ exports.index = function (req, res) {
             {track: tracking },
             function (stream) {
                 stream.on('data', function (data) {
-                    serialPort.write("1");
-                    io.sockets.emit('newTwitt', data); 
-                    console.log(data);
+			io.sockets.emit('newTwitt', data);
+			cmd.stdout.on('data', function (gdata) { console.log("cmd",gdata);}); 
+			console.log(data);
             });
         });
     }
