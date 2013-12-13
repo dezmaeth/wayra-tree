@@ -148,7 +148,7 @@ var oa = new OAuth(
     "A6x1nzmmmerCCmVN8zTgew",
     "oOMuBkeqXLqoJkSklhpTrsvuZXo9VowyABS8EkAUw",
     "1.0",
-    "http://localhost:3000/auth/twitter/callback",
+    "http://172.16.30.59:3000/auth/twitter/callback",
     "HMAC-SHA1"
 );
 app.get('/auth/twitter', function(req, res){
